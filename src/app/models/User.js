@@ -17,7 +17,7 @@ class User extends Model {
     });
 
     /* A hook that is run before creating or updating a single instance
-      this hook will hash the password before store in DB
+      this hook will encrypt the password before store in DB
     */
     this.addHook('beforeSave', async (user) => {
       /* if user provide the password */
@@ -27,6 +27,10 @@ class User extends Model {
     });
 
     return this;
+  }
+
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash);
   }
 }
 
